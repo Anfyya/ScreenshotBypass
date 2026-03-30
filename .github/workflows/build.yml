@@ -15,19 +15,25 @@ jobs:
 
     - name: Setup Theos
       run: |
-        git clone --recursive https://github.com/theos/theos.git ~/theos
-        echo "THEOS=~/theos" >> $GITHUB_ENV
+        git clone --recursive https://github.com/theos/theos.git "$HOME/theos"
+        echo "THEOS=$HOME/theos" >> $GITHUB_ENV
 
     - name: Setup patched iOS SDK
       run: |
-        mkdir -p ~/theos/sdks
+        mkdir -p "$HOME/theos/sdks"
         curl -L https://github.com/theos/sdks/releases/latest/download/iPhoneOS16.5.sdk.tar.xz -o "$RUNNER_TEMP/iPhoneOS16.5.sdk.tar.xz"
-        tar -xf "$RUNNER_TEMP/iPhoneOS16.5.sdk.tar.xz" -C ~/theos/sdks
-        test -d ~/theos/sdks/iPhoneOS16.5.sdk
+        tar -xf "$RUNNER_TEMP/iPhoneOS16.5.sdk.tar.xz" -C "$HOME/theos/sdks"
+        test -d "$HOME/theos/sdks/iPhoneOS16.5.sdk"
 
     - name: Install ldid
       run: |
         brew install ldid
+
+    - name: Install AltList to Theos
+      run: |
+        git clone --depth 1 https://github.com/opa334/AltList.git "$RUNNER_TEMP/AltList"
+        cd "$RUNNER_TEMP/AltList"
+        bash install_to_theos.sh
 
     - name: Build Tweak
       run: |

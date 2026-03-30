@@ -6,34 +6,64 @@
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Choose the apps that should ignore screenshot detection.</string>
+			<key>label</key>
+			<string>Screenshot Bypass</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSLinkCell</string>
+			<string>PSLinkListCell</string>
 			<key>detail</key>
-			<string>SBPScreenshotAppsController</string>
-			<key>isController</key>
+			<string>ATLApplicationListMultiSelectionController</string>
+			<key>sections</key>
+			<array>
+				<dict>
+					<key>sectionType</key>
+					<string>Visible</string>
+				</dict>
+			</array>
+			<key>useSearchBar</key>
 			<true/>
+			<key>showIdentifiersAsSubtitle</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.anfyya.screenshotbypass</string>
+			<key>key</key>
+			<string>screenshotApps</string>
 			<key>label</key>
-			<string>Screenshot Apps</string>
+			<string>Apps to bypass screenshot detection</string>
+			<key>showAllOption</key>
+			<true/>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
-			<key>footerText</key>
-			<string>Choose the apps that should ignore screen recording detection.</string>
+			<key>label</key>
+			<string>Screen Recording Bypass</string>
 		</dict>
 		<dict>
 			<key>cell</key>
-			<string>PSLinkCell</string>
+			<string>PSLinkListCell</string>
 			<key>detail</key>
-			<string>SBPRecordAppsController</string>
-			<key>isController</key>
+			<string>ATLApplicationListMultiSelectionController</string>
+			<key>sections</key>
+			<array>
+				<dict>
+					<key>sectionType</key>
+					<string>Visible</string>
+				</dict>
+			</array>
+			<key>useSearchBar</key>
 			<true/>
+			<key>showIdentifiersAsSubtitle</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.anfyya.screenshotbypass</string>
+			<key>key</key>
+			<string>recordApps</string>
 			<key>label</key>
-			<string>Recording Apps</string>
+			<string>Apps to bypass screen recording detection</string>
+			<key>showAllOption</key>
+			<true/>
 		</dict>
 	</array>
 	<key>title</key>
