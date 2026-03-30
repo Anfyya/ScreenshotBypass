@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <rootless.h>
 
 static NSString *const kSBPPreferencesIdentifier = @"com.anfyya.screenshotbypass";
 static NSString *const kSBPScreenshotAppsKey = @"screenshotApps";
@@ -139,18 +140,19 @@ static BOOL SBPShouldBlockNotification(NSNotification *notification) {
 %end
 
 %ctor {
-    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:kSBPPreferencesIdentifier];
-    NSDictionary *screenshotApps = [prefs dictionaryForKey:kSBPScreenshotAppsKey];
-    NSDictionary *recordApps = [prefs dictionaryForKey:kSBPRecordAppsKey];
-    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+    NSString *prefsPath = ROOT_PATH_NS(@"/var/mobile/Library/Preferences/com.anfyya.screenshotbypass.plist");
+    NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:prefsPath];
 
-    gSBPScreenshotEnabled = [screenshotApps[bundleIdentifier] boolValue];
-    gSBPRecordEnabled = [recordApps[bundleIdentifier] boolValue];
+    NSDictionary *screenshotApps = prefs[kSBPScreenshotAppsKey];
+    NSDictionary *recordApps     = prefs[kSBPRecordAppsKey];
+    NSString *bid = [[NSBundle mainBundle] bundleIdentifier];
+
+    gSBPScreenshotEnabled = [screenshotApps[bid] boolValue];
+    gSBPRecordEnabled     = [recordApps[bid] boolValue];
 
     if (gSBPScreenshotEnabled || gSBPRecordEnabled) {
         %init(NotificationHook);
     }
-
     if (gSBPRecordEnabled) {
         %init(RecordHook);
     }
