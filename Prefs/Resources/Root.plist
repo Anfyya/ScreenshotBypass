@@ -14,6 +14,17 @@
 			<string>PSLinkListCell</string>
 			<key>detail</key>
 			<string>ATLApplicationListMultiSelectionController</string>
+			<key>sections</key>
+			<array>
+				<dict>
+					<key>sectionType</key>
+					<string>Visible</string>
+				</dict>
+			</array>
+			<key>useSearchBar</key>
+			<true/>
+			<key>showIdentifiersAsSubtitle</key>
+			<true/>
 			<key>defaults</key>
 			<string>com.anfyya.screenshotbypass</string>
 			<key>key</key>
@@ -34,6 +45,17 @@
 			<string>PSLinkListCell</string>
 			<key>detail</key>
 			<string>ATLApplicationListMultiSelectionController</string>
+			<key>sections</key>
+			<array>
+				<dict>
+					<key>sectionType</key>
+					<string>Visible</string>
+				</dict>
+			</array>
+			<key>useSearchBar</key>
+			<true/>
+			<key>showIdentifiersAsSubtitle</key>
+			<true/>
 			<key>defaults</key>
 			<string>com.anfyya.screenshotbypass</string>
 			<key>key</key>
