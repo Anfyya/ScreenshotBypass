@@ -1,0 +1,9 @@
+Package: com.yourname.screenshotbypass
+Name: ScreenshotBypass
+Depends: mobilesubstrate, com.opa334.altlist
+Version: 1.0.0
+Architecture: iphoneos-arm64
+Description: 自定义拦截应用截屏与录屏检测。
+Maintainer: Your Name
+Author: Your Name
+Section: Tweaks

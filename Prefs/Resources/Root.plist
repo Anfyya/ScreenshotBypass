@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>items</key>
+	<array>
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>截屏保护绕过</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>ATLApplicationListMultiSelectionController</string>
+			<key>defaults</key>
+			<string>com.yourname.screenshotbypass</string>
+			<key>key</key>
+			<string>screenshotApps</string>
+			<key>label</key>
+			<string>选择要屏蔽截屏检测的App</string>
+			<key>showAllOption</key>
+			<true/>
+		</dict>
+
+		<dict>
+			<key>cell</key>
+			<string>PSGroupCell</string>
+			<key>label</key>
+			<string>录屏保护绕过</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSLinkListCell</string>
+			<key>detail</key>
+			<string>ATLApplicationListMultiSelectionController</string>
+			<key>defaults</key>
+			<string>com.yourname.screenshotbypass</string>
+			<key>key</key>
+			<string>recordApps</string>
+			<key>label</key>
+			<string>选择要屏蔽录屏检测的App</string>
+			<key>showAllOption</key>
+			<true/>
+		</dict>
+	</array>
+	<key>title</key>
+	<string>防截屏录屏配置</string>
+</dict>
+</plist>
