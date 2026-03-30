@@ -33,7 +33,10 @@ jobs:
       run: |
         git clone --depth 1 https://github.com/opa334/AltList.git "$RUNNER_TEMP/AltList"
         cd "$RUNNER_TEMP/AltList"
-        bash install_to_theos.sh
+        make clean
+        make FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+        mkdir -p "$THEOS/lib/iphone/rootless"
+        cp -Rv "./.theos/obj/AltList.framework" "$THEOS/lib/iphone/rootless"
 
     - name: Build Tweak
       run: |
