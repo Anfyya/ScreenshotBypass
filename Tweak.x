@@ -1,44 +1,157 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-// 组1：截屏拦截
-%group ScreenshotHook
-%hook NSNotificationCenter
-- (void)addObserver:(id)observer selector:(SEL)aSelector name:(NSNotificationName)aName object:(id)anObject {
-    if ([aName isEqualToString:UIApplicationUserDidTakeScreenshotNotification]) {
-        return; 
+static NSString *const kSBPPreferencesIdentifier = @"com.anfyya.screenshotbypass";
+static NSString *const kSBPScreenshotAppsKey = @"screenshotApps";
+static NSString *const kSBPRecordAppsKey = @"recordApps";
+
+static BOOL gSBPScreenshotEnabled = NO;
+static BOOL gSBPRecordEnabled = NO;
+
+static BOOL SBPIsScreenshotNotificationName(NSString *name) {
+    if (!gSBPScreenshotEnabled || name.length == 0) {
+        return NO;
     }
+
+    return [name isEqualToString:UIApplicationUserDidTakeScreenshotNotification] ||
+           [name isEqualToString:@"UIApplicationUserDidTakeScreenshotNotification"];
+}
+
+static BOOL SBPIsRecordNotificationName(NSString *name) {
+    if (!gSBPRecordEnabled || name.length == 0) {
+        return NO;
+    }
+
+    return [name isEqualToString:UIScreenCapturedDidChangeNotification] ||
+           [name isEqualToString:@"UIScreenCapturedDidChangeNotification"];
+}
+
+static BOOL SBPShouldBlockNotificationName(NSString *name) {
+    return SBPIsScreenshotNotificationName(name) || SBPIsRecordNotificationName(name);
+}
+
+static BOOL SBPShouldBlockNotification(NSNotification *notification) {
+    return notification != nil && SBPShouldBlockNotificationName(notification.name);
+}
+
+%group NotificationHook
+
+%hook NSNotificationCenter
+
+- (void)addObserver:(id)observer selector:(SEL)selector name:(NSNotificationName)name object:(id)object {
+    if (SBPShouldBlockNotificationName(name)) {
+        return;
+    }
+
     %orig;
 }
-%end
+
+- (id)addObserverForName:(NSNotificationName)name object:(id)object queue:(NSOperationQueue *)queue usingBlock:(void (^)(NSNotification *note))block {
+    if (SBPShouldBlockNotificationName(name)) {
+        return %orig(name, object, queue, ^(NSNotification *note) {});
+    }
+
+    return %orig;
+}
+
+- (void)postNotification:(NSNotification *)notification {
+    if (SBPShouldBlockNotification(notification)) {
+        return;
+    }
+
+    %orig;
+}
+
+- (void)postNotificationName:(NSNotificationName)name object:(id)object {
+    if (SBPShouldBlockNotificationName(name)) {
+        return;
+    }
+
+    %orig;
+}
+
+- (void)postNotificationName:(NSNotificationName)name object:(id)object userInfo:(NSDictionary *)userInfo {
+    if (SBPShouldBlockNotificationName(name)) {
+        return;
+    }
+
+    %orig;
+}
+
 %end
 
-// 组2：录屏拦截
+%hook NSNotificationQueue
+
+- (void)enqueueNotification:(NSNotification *)notification postingStyle:(NSPostingStyle)postingStyle {
+    if (SBPShouldBlockNotification(notification)) {
+        return;
+    }
+
+    %orig;
+}
+
+- (void)enqueueNotification:(NSNotification *)notification postingStyle:(NSPostingStyle)postingStyle coalesceMask:(NSNotificationCoalescing)coalesceMask forModes:(NSArray<NSString *> *)modes {
+    if (SBPShouldBlockNotification(notification)) {
+        return;
+    }
+
+    %orig;
+}
+
+%end
+
+%end
+
 %group RecordHook
+
 %hook UIScreen
+
 - (BOOL)isCaptured {
     return NO;
 }
-%end
+
+- (BOOL)captured {
+    return NO;
+}
+
+- (BOOL)_isCaptured {
+    return NO;
+}
+
 %end
 
-// 插件加载时的初始化入口
+%hook UITraitCollection
+
+- (NSInteger)sceneCaptureState {
+    return 0;
+}
+
+%end
+
+%hook UIWindowScene
+
+- (NSInteger)captureState {
+    return 0;
+}
+
+%end
+
+%end
+
 %ctor {
-    // 读取系统设置里该插件的配置文件
-    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.anfyya.screenshotbypass"];
-    
-    // 获取你在设置里勾选的 App 数组
-    NSArray *screenshotApps = [prefs arrayForKey:@"screenshotApps"];
-    NSArray *recordApps = [prefs arrayForKey:@"recordApps"];
-    
-    // 获取当前正在运行的 App 的包名 (如 com.tencent.xin)
-    NSString *bundleID = [[NSBundle mainBundle] bundleIdentifier];
-    
-    // 如果当前 App 在你的勾选名单里，才激活对应的 Hook
-    if ([screenshotApps containsObject:bundleID]) {
-        %init(ScreenshotHook);
+    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:kSBPPreferencesIdentifier];
+    NSArray *screenshotApps = [prefs arrayForKey:kSBPScreenshotAppsKey];
+    NSArray *recordApps = [prefs arrayForKey:kSBPRecordAppsKey];
+    NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
+
+    gSBPScreenshotEnabled = [screenshotApps containsObject:bundleIdentifier];
+    gSBPRecordEnabled = [recordApps containsObject:bundleIdentifier];
+
+    if (gSBPScreenshotEnabled || gSBPRecordEnabled) {
+        %init(NotificationHook);
     }
-    if ([recordApps containsObject:bundleID]) {
+
+    if (gSBPRecordEnabled) {
         %init(RecordHook);
     }
 }
