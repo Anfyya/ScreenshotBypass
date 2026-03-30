@@ -6,7 +6,6 @@ include $(THEOS)/makefiles/common.mk
 BUNDLE_NAME = ScreenshotBypassPrefs
 ScreenshotBypassPrefs_FILES = RootListController.m
 ScreenshotBypassPrefs_FRAMEWORKS = UIKit
-ScreenshotBypassPrefs_EXTRA_FRAMEWORKS = AltList
 ScreenshotBypassPrefs_PRIVATE_FRAMEWORKS = Preferences
 ScreenshotBypassPrefs_INSTALL_PATH = /Library/PreferenceBundles
 ScreenshotBypassPrefs_CFLAGS = -fobjc-arc
