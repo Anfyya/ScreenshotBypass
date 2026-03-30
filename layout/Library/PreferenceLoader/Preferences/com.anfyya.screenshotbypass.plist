@@ -12,7 +12,7 @@
 		<key>isController</key>
 		<true/>
 		<key>label</key>
-		<string>防截屏录屏</string>
+		<string>ScreenshotBypass</string>
 	</dict>
 </dict>
 </plist>

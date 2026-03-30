@@ -1,9 +1,9 @@
-Package: com.yourname.screenshotbypass
+Package: com.anfyya.screenshotbypass
 Name: ScreenshotBypass
-Depends: mobilesubstrate, com.opa334.altlist
+Depends: mobilesubstrate, preferenceloader, com.opa334.altlist
 Version: 1.0.0
 Architecture: iphoneos-arm64
-Description: 自定义拦截应用截屏与录屏检测。
-Maintainer: Your Name
-Author: Your Name
+Description: Bypass screenshot and screen recording detection per app.
+Maintainer: Anfyya
+Author: Anfyya
 Section: Tweaks

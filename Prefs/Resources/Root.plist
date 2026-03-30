@@ -7,7 +7,7 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>截屏保护绕过</string>
+			<string>Screenshot Bypass</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -15,20 +15,19 @@
 			<key>detail</key>
 			<string>ATLApplicationListMultiSelectionController</string>
 			<key>defaults</key>
-			<string>com.yourname.screenshotbypass</string>
+			<string>com.anfyya.screenshotbypass</string>
 			<key>key</key>
 			<string>screenshotApps</string>
 			<key>label</key>
-			<string>选择要屏蔽截屏检测的App</string>
+			<string>Apps to bypass screenshot detection</string>
 			<key>showAllOption</key>
 			<true/>
 		</dict>
-
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>录屏保护绕过</string>
+			<string>Screen Recording Bypass</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -36,16 +35,16 @@
 			<key>detail</key>
 			<string>ATLApplicationListMultiSelectionController</string>
 			<key>defaults</key>
-			<string>com.yourname.screenshotbypass</string>
+			<string>com.anfyya.screenshotbypass</string>
 			<key>key</key>
 			<string>recordApps</string>
 			<key>label</key>
-			<string>选择要屏蔽录屏检测的App</string>
+			<string>Apps to bypass screen recording detection</string>
 			<key>showAllOption</key>
 			<true/>
 		</dict>
 	</array>
 	<key>title</key>
-	<string>防截屏录屏配置</string>
+	<string>ScreenshotBypass</string>
 </dict>
 </plist>

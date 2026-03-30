@@ -25,7 +25,7 @@
 // 插件加载时的初始化入口
 %ctor {
     // 读取系统设置里该插件的配置文件
-    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.yourname.screenshotbypass"];
+    NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:@"com.anfyya.screenshotbypass"];
     
     // 获取你在设置里勾选的 App 数组
     NSArray *screenshotApps = [prefs arrayForKey:@"screenshotApps"];
