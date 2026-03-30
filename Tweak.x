@@ -140,12 +140,12 @@ static BOOL SBPShouldBlockNotification(NSNotification *notification) {
 
 %ctor {
     NSUserDefaults *prefs = [[NSUserDefaults alloc] initWithSuiteName:kSBPPreferencesIdentifier];
-    NSArray *screenshotApps = [prefs arrayForKey:kSBPScreenshotAppsKey];
-    NSArray *recordApps = [prefs arrayForKey:kSBPRecordAppsKey];
+    NSDictionary *screenshotApps = [prefs dictionaryForKey:kSBPScreenshotAppsKey];
+    NSDictionary *recordApps = [prefs dictionaryForKey:kSBPRecordAppsKey];
     NSString *bundleIdentifier = [[NSBundle mainBundle] bundleIdentifier];
 
-    gSBPScreenshotEnabled = [screenshotApps containsObject:bundleIdentifier];
-    gSBPRecordEnabled = [recordApps containsObject:bundleIdentifier];
+    gSBPScreenshotEnabled = [screenshotApps[bundleIdentifier] boolValue];
+    gSBPRecordEnabled = [recordApps[bundleIdentifier] boolValue];
 
     if (gSBPScreenshotEnabled || gSBPRecordEnabled) {
         %init(NotificationHook);
