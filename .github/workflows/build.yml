@@ -18,6 +18,12 @@ jobs:
         git clone --recursive https://github.com/theos/theos.git ~/theos
         echo "THEOS=~/theos" >> $GITHUB_ENV
 
+    - name: Setup patched iOS SDK
+      run: |
+        mkdir -p ~/theos/sdks
+        curl -L https://github.com/theos/sdks/releases/latest/download/iPhoneOS16.5.sdk.tar.xz -o "$RUNNER_TEMP/iPhoneOS16.5.sdk.tar.xz"
+        tar -xf "$RUNNER_TEMP/iPhoneOS16.5.sdk.tar.xz" -C ~/theos/sdks
+        test -d ~/theos/sdks/iPhoneOS16.5.sdk
 
     - name: Install ldid
       run: |
